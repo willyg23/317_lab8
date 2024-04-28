@@ -3,9 +3,10 @@ import javax.swing.*;
 import java.awt.*;
 
 public class CalculatorView extends JFrame {
-    private JTextField display = new JTextField();
+	private JTextField display = new JTextField();
     private JButton[] numberButtons = new JButton[10];
-    private JButton addButton, subtractButton, multiplyButton, divideButton, equalsButton; // Declare equalsButton here
+    private JButton addButton, subtractButton, multiplyButton, divideButton, equalsButton;
+    private JButton decimalButton; // Declare the decimal button
     private JButton sqrtButton, squareButton, memoryAddButton, memorySubtractButton, memoryRecallButton, memoryClearButton, deleteButton, clearButton;
 
     public CalculatorView() {
@@ -16,11 +17,20 @@ public class CalculatorView extends JFrame {
 
         // Setup the number buttons
         JPanel numberPanel = new JPanel(new GridLayout(4, 3));
-        for (int i = 0; i < numberButtons.length; i++) {
+        for (int i = 1; i < numberButtons.length; i++) {
             numberButtons[i] = new JButton(String.valueOf(i));
             numberPanel.add(numberButtons[i]);
         }
-
+        
+        // Decimal and zero button
+        decimalButton = new JButton("."); // Initialize the decimal button
+        numberButtons[0] = new JButton("0");
+        numberPanel.add(numberButtons[0]);
+        numberPanel.add(decimalButton);
+        JButton dummyButton = new JButton();
+        dummyButton.setEnabled(false); // Placeholder to fill the grid
+        numberPanel.add(dummyButton);
+        
         // Setup operation buttons
         addButton = new JButton("+");
         subtractButton = new JButton("-");
@@ -55,6 +65,7 @@ public class CalculatorView extends JFrame {
         // Add panels to frame
         add(numberPanel, BorderLayout.CENTER);
         add(operationPanel, BorderLayout.EAST);
+        
 
         // Finalize the frame
         pack();
@@ -63,6 +74,9 @@ public class CalculatorView extends JFrame {
     }
 
     
+    public JButton getDecimalButton() {
+        return decimalButton;
+    }
 
     public JButton getEqualsButton() {
         return equalsButton;
