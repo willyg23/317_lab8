@@ -22,7 +22,8 @@ public class CalculatorController {
         for (JButton button : view.getNumberButtons()) {
             button.addActionListener(e -> appendNumber(e.getActionCommand()));
         }
-
+        view.getDecimalButton().addActionListener(e -> appendDecimal());
+        
         view.getAddButton().addActionListener(e -> performOperation("+"));
         view.getSubtractButton().addActionListener(e -> performOperation("-"));
         view.getMultiplyButton().addActionListener(e -> performOperation("*"));
@@ -40,6 +41,15 @@ public class CalculatorController {
         view.getClearButton().addActionListener(e -> clearAll());
     }
 
+    private void appendDecimal() {
+        String currentDisplay = view.getDisplay().getText();
+        if (currentDisplay.isEmpty() || currentDisplay.endsWith(" ")) {
+            view.updateDisplay(currentDisplay + "0.");
+        } else if (!currentDisplay.contains(".")) {
+            view.updateDisplay(currentDisplay + ".");
+        }
+    }
+    
     private void appendNumber(String number) {
         view.updateDisplay(view.getDisplay().getText() + number);
     }

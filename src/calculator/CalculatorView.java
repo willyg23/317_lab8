@@ -5,7 +5,8 @@ import java.awt.*;
 public class CalculatorView extends JFrame {
     private JTextField display = new JTextField();
     private JButton[] numberButtons = new JButton[10];
-    private JButton addButton, subtractButton, multiplyButton, divideButton, equalsButton; // Declare equalsButton here
+    private JButton addButton, subtractButton, multiplyButton, divideButton, equalsButton;
+    private JButton decimalButton; // Decimal button declaration
     private JButton sqrtButton, squareButton, memoryAddButton, memorySubtractButton, memoryRecallButton, memoryClearButton, deleteButton, clearButton;
 
     public CalculatorView() {
@@ -16,17 +17,28 @@ public class CalculatorView extends JFrame {
 
         // Setup the number buttons
         JPanel numberPanel = new JPanel(new GridLayout(4, 3));
-        for (int i = 0; i < numberButtons.length; i++) {
-            numberButtons[i] = new JButton(String.valueOf(i));
+        for (int i = 0; i < 9; i++) { // 1-9 buttons
+            numberButtons[i] = new JButton(String.valueOf(i + 1));
             numberPanel.add(numberButtons[i]);
         }
 
-        // Setup operation buttons
+        // Additional buttons
+        decimalButton = new JButton("."); // Initialize decimal button
+        numberButtons[0] = new JButton("0"); // 0 button initialization
+        JButton dummyButton = new JButton(); // Dummy button to fill the grid
+        dummyButton.setEnabled(false);
+
+        // Adding buttons to the panel
+        numberPanel.add(decimalButton);
+        numberPanel.add(numberButtons[0]);
+        numberPanel.add(dummyButton);
+
+        // Operation buttons
         addButton = new JButton("+");
         subtractButton = new JButton("-");
         multiplyButton = new JButton("*");
         divideButton = new JButton("/");
-        equalsButton = new JButton("=");  // Initialize equalsButton
+        equalsButton = new JButton("=");
         sqrtButton = new JButton("√");
         squareButton = new JButton("sq");
         memoryAddButton = new JButton("M+");
@@ -63,7 +75,11 @@ public class CalculatorView extends JFrame {
     }
 
     
-
+    public JButton getDecimalButton() {
+        return decimalButton;
+    }
+    
+    
     public JButton getEqualsButton() {
         return equalsButton;
     }
