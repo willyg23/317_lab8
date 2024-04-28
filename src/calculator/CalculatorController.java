@@ -38,6 +38,15 @@ public class CalculatorController {
 
         view.getDeleteButton().addActionListener(e -> deleteLastCharacter());
         view.getClearButton().addActionListener(e -> clearAll());
+        
+        view.getDecimalButton().addActionListener(e -> appendDecimal());
+    }
+    
+    private void appendDecimal() {
+        String currentDisplay = view.getDisplay().getText();
+        if (!currentDisplay.contains(".") || currentDisplay.endsWith(" ")) {
+            view.updateDisplay(currentDisplay + ".");
+        }
     }
 
     private void appendNumber(String number) {
