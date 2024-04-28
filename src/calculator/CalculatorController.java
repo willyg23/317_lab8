@@ -43,10 +43,15 @@ public class CalculatorController {
 
     private void appendDecimal() {
         String currentDisplay = view.getDisplay().getText();
-        if (currentDisplay.isEmpty() || currentDisplay.endsWith(" ")) {
-            view.updateDisplay(currentDisplay + "0.");
-        } else if (!currentDisplay.contains(".")) {
+        // Check if the last entry already has a decimal
+        if (currentDisplay.contains(".") && !currentDisplay.contains(" ")) {
+            return; // Prevent multiple decimals in the same number
+        }
+        // Append a decimal if none present
+        if (!currentDisplay.contains(".")) {
             view.updateDisplay(currentDisplay + ".");
+        } else {
+            view.updateDisplay(currentDisplay + "0."); // Start new number with "0."
         }
     }
     

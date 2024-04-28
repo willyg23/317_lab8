@@ -17,10 +17,14 @@ public class CalculatorView extends JFrame {
 
         // Setup the number buttons
         JPanel numberPanel = new JPanel(new GridLayout(4, 3));
+     // Your existing setup seems fine, but ensure it matches the following structure:
         for (int i = 0; i < 9; i++) { // 1-9 buttons
             numberButtons[i] = new JButton(String.valueOf(i + 1));
             numberPanel.add(numberButtons[i]);
         }
+        numberButtons[9] = new JButton("0"); // Make sure '0' is initialized here
+        numberPanel.add(numberButtons[9]); // and added to the panel here
+
 
         // Additional buttons
         decimalButton = new JButton("."); // Initialize decimal button
