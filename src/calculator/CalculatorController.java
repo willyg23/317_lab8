@@ -8,6 +8,9 @@ import javax.swing.JButton;
 public class CalculatorController {
     private CalculatorView view;
     private CalculatorModel model;
+    private double currentOperand;
+    private double result;
+    private String pendingOperation;
 
     public CalculatorController(CalculatorView view, CalculatorModel model) {
         this.view = view;
@@ -16,26 +19,23 @@ public class CalculatorController {
     }
 
     private void initController() {
-        // Add action listeners for all number buttons
         for (JButton button : view.getNumberButtons()) {
             button.addActionListener(e -> appendNumber(e.getActionCommand()));
         }
 
-        // Operation button listeners
         view.getAddButton().addActionListener(e -> performOperation("+"));
         view.getSubtractButton().addActionListener(e -> performOperation("-"));
         view.getMultiplyButton().addActionListener(e -> performOperation("*"));
         view.getDivideButton().addActionListener(e -> performOperation("/"));
+        view.getEqualsButton().addActionListener(e -> computeResult()); // Add this line for "=" button
         view.getSqrtButton().addActionListener(e -> performSingleOperandOperation("sqrt"));
         view.getSquareButton().addActionListener(e -> performSingleOperandOperation("sq"));
 
-        // Memory buttons
         view.getMemoryAddButton().addActionListener(e -> updateMemory(1));
         view.getMemorySubtractButton().addActionListener(e -> updateMemory(-1));
         view.getMemoryRecallButton().addActionListener(e -> recallMemory());
         view.getMemoryClearButton().addActionListener(e -> clearMemory());
 
-        // Misc
         view.getDeleteButton().addActionListener(e -> deleteLastCharacter());
         view.getClearButton().addActionListener(e -> clearAll());
     }
@@ -45,19 +45,50 @@ public class CalculatorController {
     }
 
     private void performOperation(String operator) {
-        // Implementation for operation execution
+        if (!view.getDisplay().getText().isEmpty()) {
+            currentOperand = Double.parseDouble(view.getDisplay().getText());
+            pendingOperation = operator;
+            view.updateDisplay(""); // Optionally clear display after storing the operand
+        }
+    }
+
+    private void computeResult() {
+        if (pendingOperation != null && !view.getDisplay().getText().isEmpty()) {
+            double secondOperand = Double.parseDouble(view.getDisplay().getText());
+            result = model.calculate(currentOperand, secondOperand, pendingOperation);
+            view.updateDisplay(String.valueOf(result));
+            currentOperand = result;  // Update the current operand to the result for chaining operations
+        }
     }
 
     private void performSingleOperandOperation(String operation) {
-        // Implementation for single operand operations like square and square root
+        if (!view.getDisplay().getText().isEmpty()) {
+            currentOperand = Double.parseDouble(view.getDisplay().getText());
+            double result = switch (operation) {
+                case "sqrt" -> Math.sqrt(currentOperand);
+                case "sq" -> currentOperand * currentOperand;
+                default -> throw new IllegalArgumentException("Unknown operation " + operation);
+            };
+            view.updateDisplay(String.valueOf(result));
+            currentOperand = result;  // Update the current operand with the result
+        }
     }
 
     private void updateMemory(double multiplier) {
-        // Add or subtract from memory
+        if (!view.getDisplay().getText().isEmpty()) {
+            double currentResult = Double.parseDouble(view.getDisplay().getText());
+            if (multiplier == 1) {
+                model.addToMemory(currentResult);
+            } else {
+                model.subtractFromMemory(currentResult);
+            }
+        }
     }
 
     private void recallMemory() {
-        // Recall the value in memory
+        double memoryValue = model.getMemory();
+        view.updateDisplay(String.valueOf(memoryValue));
+        currentOperand = memoryValue; // Optionally set the recalled value as the current operand
     }
 
     private void clearMemory() {
@@ -74,6 +105,7 @@ public class CalculatorController {
     private void clearAll() {
         view.updateDisplay("");
         model.clearMemory();
+        currentOperand = 0;
+        pendingOperation = null;
     }
 }
-

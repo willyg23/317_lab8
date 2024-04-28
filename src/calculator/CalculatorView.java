@@ -5,7 +5,7 @@ import java.awt.*;
 public class CalculatorView extends JFrame {
     private JTextField display = new JTextField();
     private JButton[] numberButtons = new JButton[10];
-    private JButton addButton, subtractButton, multiplyButton, divideButton;
+    private JButton addButton, subtractButton, multiplyButton, divideButton, equalsButton; // Declare equalsButton here
     private JButton sqrtButton, squareButton, memoryAddButton, memorySubtractButton, memoryRecallButton, memoryClearButton, deleteButton, clearButton;
 
     public CalculatorView() {
@@ -26,6 +26,7 @@ public class CalculatorView extends JFrame {
         subtractButton = new JButton("-");
         multiplyButton = new JButton("*");
         divideButton = new JButton("/");
+        equalsButton = new JButton("=");  // Initialize equalsButton
         sqrtButton = new JButton("√");
         squareButton = new JButton("sq");
         memoryAddButton = new JButton("M+");
@@ -36,11 +37,12 @@ public class CalculatorView extends JFrame {
         clearButton = new JButton("C");
 
         // Layout for operation buttons
-        JPanel operationPanel = new JPanel(new GridLayout(5, 2));
+        JPanel operationPanel = new JPanel(new GridLayout(6, 2));
         operationPanel.add(addButton);
         operationPanel.add(subtractButton);
         operationPanel.add(multiplyButton);
         operationPanel.add(divideButton);
+        operationPanel.add(equalsButton);
         operationPanel.add(sqrtButton);
         operationPanel.add(squareButton);
         operationPanel.add(memoryAddButton);
@@ -58,6 +60,12 @@ public class CalculatorView extends JFrame {
         pack();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
+    }
+
+    
+
+    public JButton getEqualsButton() {
+        return equalsButton;
     }
 
     public JButton[] getNumberButtons() {
