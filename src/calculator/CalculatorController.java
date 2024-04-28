@@ -1,5 +1,6 @@
 package calculator;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -11,6 +12,7 @@ public class CalculatorController {
     private double currentOperand;
     private double result;
     private String pendingOperation;
+    private JButton lastOperatorUsed;
 
     public CalculatorController(CalculatorView view, CalculatorModel model) {
         this.view = view;
@@ -27,10 +29,16 @@ public class CalculatorController {
         view.getSubtractButton().addActionListener(e -> performOperation("-"));
         view.getMultiplyButton().addActionListener(e -> performOperation("*"));
         view.getDivideButton().addActionListener(e -> performOperation("/"));
-        view.getEqualsButton().addActionListener(e -> computeResult()); // Add this line for "=" button
+//        view.getEqualsButton().addActionListener(e -> computeResult()); // Add this line for "=" button
         view.getSqrtButton().addActionListener(e -> performSingleOperandOperation("sqrt"));
         view.getSquareButton().addActionListener(e -> performSingleOperandOperation("sq"));
 
+        
+        view.getEqualsButton().addActionListener(e -> {
+            computeResult();
+            resetButtonColors();
+        });
+        
         view.getMemoryAddButton().addActionListener(e -> updateMemory(1));
         view.getMemorySubtractButton().addActionListener(e -> updateMemory(-1));
         view.getMemoryRecallButton().addActionListener(e -> recallMemory());
@@ -40,6 +48,25 @@ public class CalculatorController {
         view.getClearButton().addActionListener(e -> clearAll());
         
         view.getDecimalButton().addActionListener(e -> appendDecimal());
+    }
+    
+    private void setupOperatorButton(JButton button, String operator) {
+        button.addActionListener(e -> {
+            performOperation(operator);
+            if (lastOperatorUsed != null && lastOperatorUsed != button) {
+                lastOperatorUsed.setBackground(null); // Reset the last operator button color
+            }
+            button.setBackground(Color.RED); // Change color to indicate selection
+            button.repaint();  
+            lastOperatorUsed = button;
+        });
+    }
+    
+    private void resetButtonColors() {
+        if (lastOperatorUsed != null) {
+            lastOperatorUsed.setBackground(null); // Reset color
+            lastOperatorUsed = null;
+        }
     }
     
     private void appendDecimal() {
@@ -116,5 +143,6 @@ public class CalculatorController {
         model.clearMemory();
         currentOperand = 0;
         pendingOperation = null;
+        resetButtonColors(); // Reset operator button colors
     }
 }
