@@ -1,5 +1,6 @@
 package calculator;
 
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -11,6 +12,8 @@ public class CalculatorController {
     private double currentOperand;
     private double result;
     private String pendingOperation;
+    private JButton lastOperatorUsed; // This will hold the last operator button pressed
+
 
     public CalculatorController(CalculatorView view, CalculatorModel model) {
         this.view = view;
@@ -38,8 +41,55 @@ public class CalculatorController {
 
         view.getDeleteButton().addActionListener(e -> deleteLastCharacter());
         view.getClearButton().addActionListener(e -> clearAll());
+        
+        view.getEqualsButton().addActionListener(e -> {
+            computeResult();
+            if (lastOperatorUsed != null) {
+                updateButtonFont(lastOperatorUsed, false);  // Reset font
+                lastOperatorUsed = null;
+            }
+            resetOperatorButton();
+        });
+
+        view.getClearButton().addActionListener(e -> {
+            clearAll();
+            if (lastOperatorUsed != null) {
+                updateButtonFont(lastOperatorUsed, false);  // Reset font
+                lastOperatorUsed = null;
+            }
+            resetOperatorButton();
+        });
+
+        
     }
 
+    private void resetOperatorButton() {
+        if (lastOperatorUsed != null) {
+            updateButtonFont(lastOperatorUsed, false);  // Reset font
+            lastOperatorUsed = null;
+        }
+    }
+    
+    private void updateButtonFont(JButton button, boolean isSelected) {
+        if (isSelected) {
+            button.setFont(new Font("Dialog", Font.BOLD, 16));  // Set font to bold and slightly larger
+        } else {
+            button.setFont(new Font("Dialog", Font.PLAIN, 12));  // Reset to default plain style
+        }
+    }
+    
+    private void setupOperatorButton(JButton button, String operator) {
+        button.addActionListener(e -> {
+            performOperation(operator);
+            if (lastOperatorUsed != null && lastOperatorUsed != button) {
+                updateButtonFont(lastOperatorUsed, false);  // Reset the last operator button font
+            }
+            updateButtonFont(button, true);  // Change font to indicate selection
+            lastOperatorUsed = button;
+        });
+    }
+
+    
     private void appendNumber(String number) {
         view.updateDisplay(view.getDisplay().getText() + number);
     }
@@ -107,5 +157,11 @@ public class CalculatorController {
         model.clearMemory();
         currentOperand = 0;
         pendingOperation = null;
+        if (lastOperatorUsed != null) {
+            updateButtonFont(lastOperatorUsed, false);  // Reset font
+            lastOperatorUsed = null;
+        }
+        resetOperatorButton();  // Reset operator button font
     }
+
 }
