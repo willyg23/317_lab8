@@ -31,7 +31,9 @@ public class CalculatorController {
         view.getSqrtButton().addActionListener(e -> performSingleOperandOperation("sqrt"));
         view.getSquareButton().addActionListener(e -> performSingleOperandOperation("sq"));
 
-        view.getMemoryAddButton().addActionListener(e -> updateMemory(1));
+//        view.getMemoryAddButton().addActionListener(e -> updateMemory(1));
+        view.getMemoryAddButton().addActionListener(e -> updateMemory(1)); // Add result to memory
+
         view.getMemorySubtractButton().addActionListener(e -> updateMemory(-1));
         view.getMemoryRecallButton().addActionListener(e -> recallMemory());
         view.getMemoryClearButton().addActionListener(e -> clearMemory());
@@ -84,13 +86,19 @@ public class CalculatorController {
     }
 
     private void updateMemory(double multiplier) {
-        if (!view.getDisplay().getText().isEmpty()) {
-            double currentResult = Double.parseDouble(view.getDisplay().getText());
-            if (multiplier == 1) {
-                model.addToMemory(currentResult);
+        try {
+            if (currentOperand != 0 && result != 0) { // Ensure there's a valid operation result
+                if (multiplier == 1) {
+                    model.addToMemory(result); // Add result to memory
+                } else {
+                    model.subtractFromMemory(result); // Subtract result from memory
+                }
+                view.updateDisplay(String.valueOf(model.getMemory())); // Optionally display memory
             } else {
-                model.subtractFromMemory(currentResult);
+                throw new IllegalArgumentException("No valid operation result to add to memory.");
             }
+        } catch (IllegalArgumentException e) {
+            view.updateDisplay("Error"); // Show error on the calculator display
         }
     }
 
