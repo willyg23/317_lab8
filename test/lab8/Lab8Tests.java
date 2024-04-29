@@ -69,6 +69,36 @@ class Lab8Tests {
         assertEquals("8", displayText, "The display should show 8 after recalling memory");
     }
 
-    //----- UI testing start -----
+    //----- UI testing end -----
+    
+    
+    //----- Boundary testing start -----
+    @Test
+    public void testOverflow() {
+        // Enter a very large number
+        enterLargeNumber();
+
+        // Perform an operation that should cause an overflow
+        performOperationThatCausesOverflow();
+
+        // Verify the display handles the overflow appropriately (e.g., error message)
+        String displayText = getDisplayText();
+        assertTrue(displayText.contains("Error"), "The display should indicate an overflow error");
+    }
+
+    @Test
+    public void testInvalidInput() {
+        // Simulate button clicks or keypresses for invalid characters
+        enterInvalidCharacters();
+
+        // Verify the display does not change or shows an error
+        String displayText = getDisplayText();
+        assertEquals("Error", displayText, "The display should show an error message or remain unchanged after invalid input");
+    }
+
+    //----- Boundary testing end -----
+    
+ 
+    
 
 }
