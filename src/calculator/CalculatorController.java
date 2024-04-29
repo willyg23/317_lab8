@@ -44,6 +44,8 @@ public class CalculatorController {
         view.getDecimalButton().addActionListener(e -> appendDecimal());
     }
     
+    
+    
     private void appendDecimal() {
         String currentDisplay = view.getDisplay().getText();
         if (!currentDisplay.contains(".") || currentDisplay.endsWith(" ")) {
@@ -86,27 +88,25 @@ public class CalculatorController {
     }
 
     private void updateMemory(double multiplier) {
-        try {
-            if (currentOperand != 0 && result != 0) { // Ensure there's a valid operation result
-                if (multiplier == 1) {
-                    model.addToMemory(result); // Add result to memory
-                } else {
-                    model.subtractFromMemory(result); // Subtract result from memory
-                }
-                view.updateDisplay(String.valueOf(model.getMemory())); // Optionally display memory
+        if (result != 0) {  // Only check result, since it's the output of an operation
+            if (multiplier == 1) {
+                model.addToMemory(result); // Add result to memory
             } else {
-                throw new IllegalArgumentException("No valid operation result to add to memory.");
+                model.subtractFromMemory(result); // Subtract result from memory
             }
-        } catch (IllegalArgumentException e) {
-            view.updateDisplay("Error"); // Show error on the calculator display
+            view.updateDisplay(String.valueOf(model.getMemory())); // Optionally display memory
+        } else {
+            view.updateDisplay("Error"); // Show error on the calculator display if result is zero
         }
     }
 
+
     private void recallMemory() {
         double memoryValue = model.getMemory();
-        view.updateDisplay(String.valueOf(memoryValue));
-        currentOperand = memoryValue; // Optionally set the recalled value as the current operand
+        view.updateDisplay(String.valueOf(memoryValue));  // Display the memory value
+        currentOperand = memoryValue;  // Set the recalled memory as the current operand for new calculations
     }
+
 
     private void clearMemory() {
         model.clearMemory();
@@ -121,7 +121,7 @@ public class CalculatorController {
 
     private void clearAll() {
         view.updateDisplay("");
-        model.clearMemory();
+//        model.clearMemory(); removing this line so that memory persists
         currentOperand = 0;
         pendingOperation = null;
     }
