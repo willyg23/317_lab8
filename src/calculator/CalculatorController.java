@@ -54,9 +54,11 @@ public class CalculatorController {
     }
 
     private void appendNumber(String number) {
+        if (view.getDisplay().getText().equals("Divide by zero error")) {
+            view.updateDisplay(""); // Clear the error message when starting a new number entry
+        }
         view.updateDisplay(view.getDisplay().getText() + number);
     }
-
     private void performOperation(String operator) {
         if (!view.getDisplay().getText().isEmpty()) {
             currentOperand = Double.parseDouble(view.getDisplay().getText());
@@ -67,12 +69,20 @@ public class CalculatorController {
 
     private void computeResult() {
         if (pendingOperation != null && !view.getDisplay().getText().isEmpty()) {
-            double secondOperand = Double.parseDouble(view.getDisplay().getText());
-            result = model.calculate(currentOperand, secondOperand, pendingOperation);
-            view.updateDisplay(String.valueOf(result));
-            currentOperand = result;  // Update the current operand to the result for chaining operations
+            try {
+                double secondOperand = Double.parseDouble(view.getDisplay().getText());
+                result = model.calculate(currentOperand, secondOperand, pendingOperation);
+                view.updateDisplay(String.valueOf(result));
+                currentOperand = result;  // Update the current operand to the result for chaining operations
+            } catch (ArithmeticException e) {
+                view.updateDisplay("Divide by zero error"); // Display divide by zero error message
+                result = 0; // Reset result
+                currentOperand = 0; // Reset current operand
+                pendingOperation = null; // Clear operation to prevent chaining after error
+            }
         }
     }
+
 
     private void performSingleOperandOperation(String operation) {
         if (!view.getDisplay().getText().isEmpty()) {
