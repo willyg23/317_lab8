@@ -88,21 +88,18 @@ public class CalculatorController {
     }
 
     private void updateMemory(double multiplier) {
-        try {
-            if (currentOperand != 0 && result != 0) { // Ensure there's a valid operation result
-                if (multiplier == 1) {
-                    model.addToMemory(result); // Add result to memory
-                } else {
-                    model.subtractFromMemory(result); // Subtract result from memory
-                }
-                view.updateDisplay(String.valueOf(model.getMemory())); // Optionally display memory
+        if (result != 0) {  // Only check result, since it's the output of an operation
+            if (multiplier == 1) {
+                model.addToMemory(result); // Add result to memory
             } else {
-                throw new IllegalArgumentException("No valid operation result to add to memory.");
+                model.subtractFromMemory(result); // Subtract result from memory
             }
-        } catch (IllegalArgumentException e) {
-            view.updateDisplay("Error"); // Show error on the calculator display
+            view.updateDisplay(String.valueOf(model.getMemory())); // Optionally display memory
+        } else {
+            view.updateDisplay("Error"); // Show error on the calculator display if result is zero
         }
     }
+
 
     private void recallMemory() {
         double memoryValue = model.getMemory();
