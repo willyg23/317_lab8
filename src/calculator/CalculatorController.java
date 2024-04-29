@@ -44,6 +44,8 @@ public class CalculatorController {
         view.getDecimalButton().addActionListener(e -> appendDecimal());
     }
     
+    
+    
     private void appendDecimal() {
         String currentDisplay = view.getDisplay().getText();
         if (!currentDisplay.contains(".") || currentDisplay.endsWith(" ")) {
@@ -104,9 +106,10 @@ public class CalculatorController {
 
     private void recallMemory() {
         double memoryValue = model.getMemory();
-        view.updateDisplay(String.valueOf(memoryValue));
-        currentOperand = memoryValue; // Optionally set the recalled value as the current operand
+        view.updateDisplay(String.valueOf(memoryValue));  // Display the memory value
+        currentOperand = memoryValue;  // Set the recalled memory as the current operand for new calculations
     }
+
 
     private void clearMemory() {
         model.clearMemory();
@@ -121,7 +124,7 @@ public class CalculatorController {
 
     private void clearAll() {
         view.updateDisplay("");
-        model.clearMemory();
+//        model.clearMemory(); removing this line so that memory persists
         currentOperand = 0;
         pendingOperation = null;
     }
