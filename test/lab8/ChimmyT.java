@@ -25,6 +25,7 @@ class ChimmyT {
         assertEquals(5, calculator.calculate(10, 2, "/"), "Division test failed");
     }
 
+    //pass
     @Test
     void testDivideByZero() {
         Exception exception = assertThrows(ArithmeticException.class, () -> {
@@ -33,13 +34,14 @@ class ChimmyT {
         assertEquals("Divide by zero error", exception.getMessage(), "Divide by zero test failed");
     }
 
-//    @Test
-//    void testSquareRootOfNegativeNumber() {
-//        Exception exception = assertThrows(ArithmeticException.class, () -> {
-//            calculator.calculate(-4, 0, "sqrt");
-//        });
-//        assertEquals("Cannot take the square root of a negative number", exception.getMessage(), "Square root of negative number test failed");
-//    }
+    
+    @Test
+    void testSquareRootOfNegativeNumber() {
+        Exception exception = assertThrows(ArithmeticException.class, () -> {
+            calculator.calculate(-4, 0, "sqrt");
+        });
+        assertEquals("Cannot take the square root of a negative number", exception.getMessage(), "Square root of negative number test failed");
+    }
     //----- model tests end -----
     
     

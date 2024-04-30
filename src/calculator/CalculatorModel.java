@@ -14,7 +14,13 @@ public class CalculatorModel {
                 }
                 return operand1 / operand2;
             case "sq": return operand1 * operand1;
-            case "sqrt": return Math.sqrt(operand1);
+            case "sqrt": 
+            	
+	        	if (operand1 < 0) {
+	                throw new ArithmeticException("Cannot take the square root of a negative number");
+                }
+            	return Math.sqrt(operand1);
+            	
             default: throw new IllegalArgumentException("Invalid operator.");
         }
     }
