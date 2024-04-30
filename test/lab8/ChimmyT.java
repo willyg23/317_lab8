@@ -34,7 +34,7 @@ class ChimmyT {
         assertEquals("Divide by zero error", exception.getMessage(), "Divide by zero test failed");
     }
 
-    
+    //pass
     @Test
     void testSquareRootOfNegativeNumber() {
         Exception exception = assertThrows(ArithmeticException.class, () -> {
@@ -112,19 +112,35 @@ class ChimmyT {
 
 //    
 //    //----- Boundary testing start -----
-//    @Test
-//    public void testOverflow() {
-//        // Enter a very large number
-//        enterLargeNumber();
-//
-//        // Perform an operation that should cause an overflow
-//        performOperationThatCausesOverflow();
-//
-//        // Verify the display handles the overflow appropriately (e.g., error message)
-//        String displayText = getDisplayText();
-//        assertTrue(displayText.contains("Error"), "The display should indicate an overflow error");
-//    }
-//
+    @Test
+    public void testOverflow() {
+        // Enter a very large number
+        
+        
+        
+        Exception exception = assertThrows(ArithmeticException.class, () -> {
+        	calculator.addToMemory(Double.MAX_VALUE);
+        });
+        
+        // Verify the display handles the overflow appropriately (e.g., error message)
+        assertEquals("Number too big", exception.getMessage(), "Number too big");
+    }
+
+    @Test
+    public void testOverflow2() {
+    	
+    	Exception exception = assertThrows(ArithmeticException.class, () -> {
+    	  	  // Perform an operation that should cause an overflow
+        	calculator.calculate(Double.MAX_VALUE,Double.MAX_VALUE,"+" );
+        });
+    	
+        // Verify the display handles the overflow appropriately (e.g., error message)
+        assertEquals("Number too big", exception.getMessage(), "Number too big");
+        
+    }
+    
+  
+    
 //    @Test
 //    public void testInvalidInput() {
 //        // Simulate button clicks or keypresses for invalid characters

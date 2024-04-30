@@ -4,6 +4,11 @@ public class CalculatorModel {
     private double memory = 0.0;
 
     public double calculate(double operand1, double operand2, String operator) {
+    	
+        if (operand1 >= Double.MAX_VALUE || operand2 >= Double.MAX_VALUE) {
+            throw new ArithmeticException("Number too big");
+        }
+    	
         switch (operator) {
             case "+": return operand1 + operand2;
             case "-": return operand1 - operand2;
@@ -26,11 +31,17 @@ public class CalculatorModel {
     }
 
     public void addToMemory(double value) {
+    	if (value >= Double.MAX_VALUE ) {
+            throw new ArithmeticException("Number too big");
+        }
         memory += value;
         System.out.println("memory value: " + memory);
     }
 
     public void subtractFromMemory(double value) {
+    	if (value >= Double.MAX_VALUE ) {
+            throw new ArithmeticException("Number too big");
+        }
         memory -= value;
         System.out.println("memory value: " + memory);
     }
