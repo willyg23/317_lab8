@@ -45,6 +45,7 @@ public class CalculatorController {
     }
     
     
+      
     
     private void appendDecimal() {
         String currentDisplay = view.getDisplay().getText();
@@ -54,35 +55,31 @@ public class CalculatorController {
     }
 
     private void appendNumber(String number) {
-        if (view.getDisplay().getText().equals("Divide by zero error")) {
-            view.updateDisplay(""); // Clear the error message when starting a new number entry
-        }
         view.updateDisplay(view.getDisplay().getText() + number);
     }
+
     private void performOperation(String operator) {
-        if (!view.getDisplay().getText().isEmpty()) {
-            currentOperand = Double.parseDouble(view.getDisplay().getText());
-            pendingOperation = operator;
-            view.updateDisplay(""); // Optionally clear display after storing the operand
-        }
+    	try {
+            if (!view.getDisplay().getText().isEmpty()) {
+                currentOperand = Double.parseDouble(view.getDisplay().getText());
+                pendingOperation = operator;
+                view.updateDisplay(""); // Optionally clear display after storing the operand
+            }            
+    	}
+    	catch (Exception e){
+    		System.out.println("Error here");
+    	}
+
     }
 
     private void computeResult() {
         if (pendingOperation != null && !view.getDisplay().getText().isEmpty()) {
-            try {
-                double secondOperand = Double.parseDouble(view.getDisplay().getText());
-                result = model.calculate(currentOperand, secondOperand, pendingOperation);
-                view.updateDisplay(String.valueOf(result));
-                currentOperand = result;  // Update the current operand to the result for chaining operations
-            } catch (ArithmeticException e) {
-                view.updateDisplay("Divide by zero error"); // Display divide by zero error message
-                result = 0; // Reset result
-                currentOperand = 0; // Reset current operand
-                pendingOperation = null; // Clear operation to prevent chaining after error
-            }
+            double secondOperand = Double.parseDouble(view.getDisplay().getText());
+            result = model.calculate(currentOperand, secondOperand, pendingOperation);
+            view.updateDisplay(String.valueOf(result));
+            currentOperand = result;  // Update the current operand to the result for chaining operations
         }
     }
-
 
     private void performSingleOperandOperation(String operation) {
         if (!view.getDisplay().getText().isEmpty()) {
@@ -104,7 +101,8 @@ public class CalculatorController {
             } else {
                 model.subtractFromMemory(result); // Subtract result from memory
             }
-//            view.updateDisplay(String.valueOf(model.getMemory())); // comment out so that M+ and M- don't affect the output 
+//            view.updateDisplay(String.valueOf(model.getMemory())); // Optionally display memory
+        } else {
             view.updateDisplay("Error"); // Show error on the calculator display if result is zero
         }
     }
@@ -114,11 +112,12 @@ public class CalculatorController {
         double memoryValue = model.getMemory();
         view.updateDisplay(String.valueOf(memoryValue));  // Display the memory value
         currentOperand = memoryValue;  // Set the recalled memory as the current operand for new calculations
+        System.out.println("memory value: " + memoryValue);
     }
 
 
-    
     private void clearMemory() {
+    	System.out.println("HERE1");
         model.clearMemory();
     }
 
@@ -134,5 +133,6 @@ public class CalculatorController {
         model.clearMemory(); //removing this line so that memory persists
         currentOperand = 0;
         pendingOperation = null;
+        result = 0; // bug was found here, result was not set to 0 
     }
 }
