@@ -117,6 +117,7 @@ public class CalculatorController {
     }
 
 
+    
     private void clearMemory() {
         model.clearMemory();
     }
