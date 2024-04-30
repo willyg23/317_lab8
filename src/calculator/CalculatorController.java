@@ -104,8 +104,7 @@ public class CalculatorController {
             } else {
                 model.subtractFromMemory(result); // Subtract result from memory
             }
-            view.updateDisplay(String.valueOf(model.getMemory())); // Optionally display memory
-        } else {
+//            view.updateDisplay(String.valueOf(model.getMemory())); // comment out so that M+ and M- don't affect the output 
             view.updateDisplay("Error"); // Show error on the calculator display if result is zero
         }
     }
@@ -131,7 +130,7 @@ public class CalculatorController {
 
     private void clearAll() {
         view.updateDisplay("");
-//        model.clearMemory(); removing this line so that memory persists
+        model.clearMemory(); //removing this line so that memory persists
         currentOperand = 0;
         pendingOperation = null;
     }
