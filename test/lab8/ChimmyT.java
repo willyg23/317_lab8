@@ -74,38 +74,38 @@ class ChimmyT {
 
     //----- UI testing end -----
     
-    public void enterLargeNumber(CalculatorModel calculator) {
-        // This example assumes that your calculator can handle doubles and uses a large value to test overflow.
-        // Adjust the size of the number based on the data type used by your calculator.
-        calculator.pressNumber(Double.MAX_VALUE);
-    }
-    
-    public void performOperationThatCausesOverflow(CalculatorModel calculator) {
-        // First, enter a large number
-        calculator.pressNumber(Double.MAX_VALUE);
-        // Choose an operation that would likely cause overflow
-        calculator.pressOperation("*");
-        // Enter another large number
-        calculator.pressNumber(Double.MAX_VALUE);
-        // Perform the operation
-        calculator.pressOperation("=");
-    }
-
-    
-    public void enterInvalidCharacters(CalculatorModel calculator) {
-        // Since we're simulating, let's assume entering a character in a numeric-only calculator
-        // This could be implemented by catching an exception or checking for an error state
-        try {
-            calculator.pressNumber(Double.parseDouble("a"));  // This will throw a NumberFormatException
-        } catch (NumberFormatException e) {
-            System.out.println("Invalid input handled: " + e.getMessage());
-        }
-    }
-    
-    public String getDisplayText(Calculator calculator) {
-        // Assume Calculator has a method to get the current result or display text
-        return String.valueOf(calculator.getResult());
-    }
+//    public void enterLargeNumber(CalculatorModel calculator) {
+//        // This example assumes that your calculator can handle doubles and uses a large value to test overflow.
+//        // Adjust the size of the number based on the data type used by your calculator.
+//        calculator.pressNumber(Double.MAX_VALUE);
+//    }
+//    
+//    public void performOperationThatCausesOverflow(CalculatorModel calculator) {
+//        // First, enter a large number
+//        calculator.pressNumber(Double.MAX_VALUE);
+//        // Choose an operation that would likely cause overflow
+//        calculator.pressOperation("*");
+//        // Enter another large number
+//        calculator.pressNumber(Double.MAX_VALUE);
+//        // Perform the operation
+//        calculator.pressOperation("=");
+//    }
+//
+//    
+//    public void enterInvalidCharacters(CalculatorModel calculator) {
+//        // Since we're simulating, let's assume entering a character in a numeric-only calculator
+//        // This could be implemented by catching an exception or checking for an error state
+//        try {
+//            calculator.pressNumber(Double.parseDouble("a"));  // This will throw a NumberFormatException
+//        } catch (NumberFormatException e) {
+//            System.out.println("Invalid input handled: " + e.getMessage());
+//        }
+//    }
+//    
+//    public String getDisplayText(CalculatorModel calculator) {
+//        // Assume Calculator has a method to get the current result or display text
+//        return String.valueOf(calculator.getResult());
+//    }
 
 
 //    

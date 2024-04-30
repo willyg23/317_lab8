@@ -9,7 +9,9 @@ public class CalculatorModel {
             case "-": return operand1 - operand2;
             case "*": return operand1 * operand2;
             case "/":
-                if (operand2 == 0) throw new IllegalArgumentException("Cannot divide by zero.");
+                if (operand2 == 0) {
+                    throw new ArithmeticException("Divide by zero error");
+                }
                 return operand1 / operand2;
             case "sq": return operand1 * operand1;
             case "sqrt": return Math.sqrt(operand1);

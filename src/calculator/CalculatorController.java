@@ -73,11 +73,16 @@ public class CalculatorController {
     }
 
     private void computeResult() {
-        if (pendingOperation != null && !view.getDisplay().getText().isEmpty()) {
+        try {
             double secondOperand = Double.parseDouble(view.getDisplay().getText());
             result = model.calculate(currentOperand, secondOperand, pendingOperation);
             view.updateDisplay(String.valueOf(result));
             currentOperand = result;  // Update the current operand to the result for chaining operations
+        } catch (ArithmeticException e) {
+            view.updateDisplay("Divide by zero error"); // Display divide by zero error message
+            result = 0; // Reset result
+            currentOperand = 0; // Reset current operand
+            pendingOperation = null; // Clear operation to prevent chaining after error
         }
     }
 
