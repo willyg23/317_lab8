@@ -113,7 +113,7 @@ public class CalculatorController {
     }
 
 
-    private void recallMemory() {
+    public void recallMemory() {
         double memoryValue = model.getMemory();
         view.updateDisplay(String.valueOf(memoryValue));  // Display the memory value
         currentOperand = memoryValue;  // Set the recalled memory as the current operand for new calculations

@@ -358,6 +358,42 @@ class ChimmyT {
         }
     }
     
+    @Test
+    void testMemoryRecallDisplaysCorrectValue() {
+        // Setting up the memory value
+        model.addToMemory(100.0); // Assume we added 100 to memory earlier
+
+        // Execute
+        controller.recallMemory();
+
+        // Verify the display shows the memory value
+        assertEquals("100.0", view.getDisplay().getText(), "Display should show the memory value.");
+    }
+
+    @Test
+    void testCurrentOperandSetAfterMemoryRecall() {
+        // Setting up the memory value
+        model.addToMemory(150.0); // Assume we added 150 to memory earlier
+
+        // Execute
+        controller.recallMemory();
+
+        // Check currentOperand via reflection or add method
+        assertEquals(150.0, getCurrentOperandThroughReflection(), 0.001, "Current operand should be set to the recalled memory value.");
+    }
+
+    // Utility method to get the private currentOperand field via reflection
+    private double getCurrentOperandThroughReflection() {
+        try {
+            java.lang.reflect.Field currentOperandField = CalculatorController.class.getDeclaredField("currentOperand");
+            currentOperandField.setAccessible(true);
+            return (double) currentOperandField.get(controller);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1; // Just to handle errors
+        }
+    }
+    
 //    @Test
 //    public void testInvalidInput() {
 //        // Simulate button clicks or keypresses for invalid characters
