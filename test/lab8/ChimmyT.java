@@ -133,6 +133,7 @@ class ChimmyT {
 //    private final CalculatorView view = new CalculatorView();
 //    private final CalculatorController controller = new CalculatorController(view ,calculator);
     
+    
     @Test
     public void testAppendDecimalNoExistingDecimal() {
         // Setup
@@ -497,15 +498,105 @@ class ChimmyT {
         return 0.0; // Placeholder
     }
     
-//    @Test
-//    public void testInvalidInput() {
-//        // Simulate button clicks or keypresses for invalid characters
-//        enterInvalidCharacters();
-//
-//        // Verify the display does not change or shows an error
-//        String displayText = getDisplayText();
-//        assertEquals("Error", displayText, "The display should show an error message or remain unchanged after invalid input");
-//    }
+    
+    
+    // controller testing end
+    
+    
+    //view testing start
+    
+    @Test
+    void testGetDecimalButton() {
+        assertNotNull(view.getDecimalButton(), "Decimal button should not be null.");
+    }
+
+    @Test
+    void testGetEqualsButton() {
+        assertNotNull(view.getEqualsButton(), "Equals button should not be null.");
+    }
+
+    @Test
+    void testGetNumberButtons() {
+        assertNotNull(view.getNumberButtons(), "Number buttons should not be null.");
+        assertEquals(10, view.getNumberButtons().length, "There should be 10 number buttons.");
+    }
+
+    @Test
+    void testGetAddButton() {
+        assertNotNull(view.getAddButton(), "Add button should not be null.");
+    }
+
+    @Test
+    void testGetSubtractButton() {
+        assertNotNull(view.getSubtractButton(), "Subtract button should not be null.");
+    }
+
+    @Test
+    void testGetMultiplyButton() {
+        assertNotNull(view.getMultiplyButton(), "Multiply button should not be null.");
+    }
+
+    @Test
+    void testGetDivideButton() {
+        assertNotNull(view.getDivideButton(), "Divide button should not be null.");
+    }
+
+    @Test
+    void testGetSqrtButton() {
+        assertNotNull(view.getSqrtButton(), "Sqrt button should not be null.");
+    }
+
+    @Test
+    void testGetSquareButton() {
+        assertNotNull(view.getSquareButton(), "Square button should not be null.");
+    }
+
+    @Test
+    void testGetMemoryAddButton() {
+        assertNotNull(view.getMemoryAddButton(), "Memory Add button should not be null.");
+    }
+
+    @Test
+    void testGetMemorySubtractButton() {
+        assertNotNull(view.getMemorySubtractButton(), "Memory Subtract button should not be null.");
+    }
+
+    @Test
+    void testGetMemoryRecallButton() {
+        assertNotNull(view.getMemoryRecallButton(), "Memory Recall button should not be null.");
+    }
+
+    @Test
+    void testGetMemoryClearButton() {
+        assertNotNull(view.getMemoryClearButton(), "Memory Clear button should not be null.");
+    }
+
+    @Test
+    void testGetDeleteButton() {
+        assertNotNull(view.getDeleteButton(), "Delete button should not be null.");
+    }
+
+    @Test
+    void testGetClearButton() {
+        assertNotNull(view.getClearButton(), "Clear button should not be null.");
+    }
+
+    @Test
+    void testGetDisplay() {
+        assertNotNull(view.getDisplay(), "Display should not be null.");
+    }
+
+    @Test
+    void testUpdateDisplay() {
+        JTextField display = view.getDisplay();
+        view.updateDisplay("Test");
+        assertEquals("Test", display.getText(), "Display should be updated with 'Test'.");
+    }
+    
+    //view testing end
+    
+    
+
 
     //----- Boundary testing end -----
     
