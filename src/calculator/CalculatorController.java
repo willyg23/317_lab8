@@ -18,7 +18,7 @@ public class CalculatorController {
         this.initController();
     }
 
-    private void initController() {
+    public void initController() {
         for (JButton button : view.getNumberButtons()) {
             button.addActionListener(e -> appendNumber(e.getActionCommand()));
         }
@@ -47,18 +47,18 @@ public class CalculatorController {
     
       
     
-    private void appendDecimal() {
+    public void appendDecimal() {
         String currentDisplay = view.getDisplay().getText();
         if (!currentDisplay.contains(".") || currentDisplay.endsWith(" ")) {
             view.updateDisplay(currentDisplay + ".");
         }
     }
 
-    private void appendNumber(String number) {
+    public void appendNumber(String number) {
         view.updateDisplay(view.getDisplay().getText() + number);
     }
 
-    private void performOperation(String operator) {
+    public void performOperation(String operator) {
     	try {
             if (!view.getDisplay().getText().isEmpty()) {
                 currentOperand = Double.parseDouble(view.getDisplay().getText());
@@ -72,7 +72,7 @@ public class CalculatorController {
 
     }
 
-    private void computeResult() {
+    public void computeResult() {
         try {
             double secondOperand = Double.parseDouble(view.getDisplay().getText());
             result = model.calculate(currentOperand, secondOperand, pendingOperation);
@@ -86,7 +86,7 @@ public class CalculatorController {
         }
     }
 
-    private void performSingleOperandOperation(String operation) {
+    public void performSingleOperandOperation(String operation) {
         if (!view.getDisplay().getText().isEmpty()) {
             currentOperand = Double.parseDouble(view.getDisplay().getText());
             double result = switch (operation) {
@@ -99,7 +99,7 @@ public class CalculatorController {
         }
     }
 
-    private void updateMemory(double multiplier) {
+    public void updateMemory(double multiplier) {
         if (result != 0) {  // Only check result, since it's the output of an operation
             if (multiplier == 1) {
                 model.addToMemory(result); // Add result to memory
@@ -113,7 +113,7 @@ public class CalculatorController {
     }
 
 
-    private void recallMemory() {
+    public void recallMemory() {
         double memoryValue = model.getMemory();
         view.updateDisplay(String.valueOf(memoryValue));  // Display the memory value
         currentOperand = memoryValue;  // Set the recalled memory as the current operand for new calculations
@@ -121,19 +121,19 @@ public class CalculatorController {
     }
 
 
-    private void clearMemory() {
+    public void clearMemory() {
     	System.out.println("HERE1");
         model.clearMemory();
     }
 
-    private void deleteLastCharacter() {
+    public void deleteLastCharacter() {
         String currentDisplay = view.getDisplay().getText();
         if (!currentDisplay.isEmpty()) {
             view.updateDisplay(currentDisplay.substring(0, currentDisplay.length() - 1));
         }
     }
 
-    private void clearAll() {
+    public void clearAll() {
         view.updateDisplay("");
         model.clearMemory(); //removing this line so that memory persists
         currentOperand = 0;
