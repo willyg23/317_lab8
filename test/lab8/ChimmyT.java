@@ -5,9 +5,14 @@ import calculator.CalculatorController;
 import calculator.CalculatorModel;
 import calculator.CalculatorView;
 
+
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.Before;
+import javax.swing.JTextField;
+
+//import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
+
 import org.junit.jupiter.api.Test;
 
 
@@ -16,7 +21,20 @@ class ChimmyT {
     private final CalculatorModel calculator = new CalculatorModel();
 
 
+
+    private CalculatorController controller;
+    private CalculatorView view;
+    private CalculatorModel model;
+
+    @BeforeEach
+    public void setUp() {
+        view = new CalculatorView(); // Actual view object
+        model = new CalculatorModel(); // Actual model object
+        controller = new CalculatorController(view, model);
+    }
      //----- model tests start -----
+    
+    
     
     //pass
     @Test
@@ -112,25 +130,75 @@ class ChimmyT {
 
     
     //controller testing cuh
-    private final CalculatorView view = new CalculatorView();
-    private final CalculatorController controller = new CalculatorController(view ,calculator);
+//    private final CalculatorView view = new CalculatorView();
+//    private final CalculatorController controller = new CalculatorController(view ,calculator);
     
     @Test
-    public void controllerInitTest() {
-    	
-    	controller.initController();
+    public void testAppendDecimalNoExistingDecimal() {
+        // Setup
+        JTextField display = view.getDisplay();
+        display.setText("123");
 
+        // Execute
+        controller.appendDecimal();
+
+        // Verify
+        assertEquals("123.", display.getText());
     }
-    
-    @Test
-    public void appendDecimalTest() {
-    	
-    	controller.initController();
-//    	controller.
 
+    @Test
+    public void testAppendDecimalExistingDecimal() {
+        // Setup
+        JTextField display = view.getDisplay();
+        display.setText("123.45");
+
+        // Execute
+        controller.appendDecimal();
+
+        // Verify
+        assertEquals("123.45", display.getText()); // Should not change
+    }
+
+    @Test
+    public void testAppendDecimalAfterSpace() {
+        // Setup
+        JTextField display = view.getDisplay();
+        display.setText("123.45 ");
+
+        // Execute
+        controller.appendDecimal();
+
+        // Verify
+        assertEquals("123.45 .", display.getText()); // Should append a new decimal after the space
     }
     
   
+
+    @Test
+    void testAppendNumberToEmptyDisplay() {
+        // Set up the display initially empty
+        JTextField display = view.getDisplay();
+        display.setText("");
+
+        // Execute
+        controller.appendNumber("5");
+
+        // Verify
+        assertEquals("5", display.getText(), "Display should show '5' after appending to empty display.");
+    }
+
+    @Test
+    void testAppendNumberToNonEmptyDisplay() {
+        // Set up the display with initial content
+        JTextField display = view.getDisplay();
+        display.setText("123");
+
+        // Execute
+        controller.appendNumber("4");
+
+        // Verify
+        assertEquals("1234", display.getText(), "Display should show '1234' after appending '4' to '123'.");
+    }
     
 //    @Test
 //    public void testInvalidInput() {

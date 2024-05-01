@@ -47,14 +47,14 @@ public class CalculatorController {
     
       
     
-    private void appendDecimal() {
+    public void appendDecimal() {
         String currentDisplay = view.getDisplay().getText();
         if (!currentDisplay.contains(".") || currentDisplay.endsWith(" ")) {
             view.updateDisplay(currentDisplay + ".");
         }
     }
 
-    private void appendNumber(String number) {
+    public void appendNumber(String number) {
         view.updateDisplay(view.getDisplay().getText() + number);
     }
 
