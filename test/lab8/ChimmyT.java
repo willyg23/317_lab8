@@ -1,8 +1,13 @@
 package lab8;
 
 
+import calculator.CalculatorController;
 import calculator.CalculatorModel;
+import calculator.CalculatorView;
+
 import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.Before;
 import org.junit.jupiter.api.Test;
 
 
@@ -10,7 +15,7 @@ class ChimmyT {
 
     private final CalculatorModel calculator = new CalculatorModel();
 
-    
+
      //----- model tests start -----
     
     //pass
@@ -42,74 +47,34 @@ class ChimmyT {
         });
         assertEquals("Cannot take the square root of a negative number", exception.getMessage(), "Square root of negative number test failed");
     }
+  
+  //pass
+    @Test
+    void testMulitplaction() {
+    	assertEquals(100, calculator.calculate(10, 10, "*"));
+    }
+    
+    //pass
+    @Test
+    void testSubtraction() {
+    	assertEquals(24, calculator.calculate(30, 6, "-"));
+    }
+    
+    @Test
+    public void testMemoryOperations() {
+        CalculatorModel model = new CalculatorModel();
+        model.addToMemory(10);
+        assertEquals(10.0, model.getMemory(), 0.0001);
+        
+        model.subtractFromMemory(5);
+        assertEquals(5.0, model.getMemory(), 0.0001);
+        
+        model.clearMemory();
+        assertEquals(0.0, model.getMemory(), 0.0001);
+    }
     //----- model tests end -----
     
-    
-    //----- UI testing start -----
-//    
-//    @Test
-//    public void testButtonResponse() {
-//        // Simulate button clicks for "1", "2", "+", "3", "="
-//        clickButton("1");
-//        clickButton("2");
-//        clickButton("+");
-//        clickButton("3");
-//        clickButton("=");
-//        
-//        // Verify the display shows "15"
-//        String displayText = getDisplayText();
-//        assertEquals("15", displayText, "The display should show 15 after the sequence 1, 2, +, 3, =");
-//    }
-//
-//    @Test
-//    public void testMemoryFunctions() {
-//        // Simulate button clicks for "8", "M+", "C", "MR"
-//        clickButton("8");
-//        clickButton("M+");
-//        clickButton("C"); // Assuming "C" is the clear button
-//        clickButton("MR");
-//        
-//        // Verify the display shows "8" after recall
-//        String displayText = getDisplayText();
-//        assertEquals("8", displayText, "The display should show 8 after recalling memory");
-//    }
-
-    //----- UI testing end -----
-    
-//    public void enterLargeNumber(CalculatorModel calculator) {
-//        // This example assumes that your calculator can handle doubles and uses a large value to test overflow.
-//        // Adjust the size of the number based on the data type used by your calculator.
-//        calculator.pressNumber(Double.MAX_VALUE);
-//    }
-//    
-//    public void performOperationThatCausesOverflow(CalculatorModel calculator) {
-//        // First, enter a large number
-//        calculator.pressNumber(Double.MAX_VALUE);
-//        // Choose an operation that would likely cause overflow
-//        calculator.pressOperation("*");
-//        // Enter another large number
-//        calculator.pressNumber(Double.MAX_VALUE);
-//        // Perform the operation
-//        calculator.pressOperation("=");
-//    }
-//
-//    
-//    public void enterInvalidCharacters(CalculatorModel calculator) {
-//        // Since we're simulating, let's assume entering a character in a numeric-only calculator
-//        // This could be implemented by catching an exception or checking for an error state
-//        try {
-//            calculator.pressNumber(Double.parseDouble("a"));  // This will throw a NumberFormatException
-//        } catch (NumberFormatException e) {
-//            System.out.println("Invalid input handled: " + e.getMessage());
-//        }
-//    }
-//    
-//    public String getDisplayText(CalculatorModel calculator) {
-//        // Assume Calculator has a method to get the current result or display text
-//        return String.valueOf(calculator.getResult());
-//    }
-
-
+  
 //    
 //    //----- Boundary testing start -----
     @Test
