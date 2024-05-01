@@ -18,7 +18,7 @@ public class CalculatorController {
         this.initController();
     }
 
-    private void initController() {
+    public void initController() {
         for (JButton button : view.getNumberButtons()) {
             button.addActionListener(e -> appendNumber(e.getActionCommand()));
         }

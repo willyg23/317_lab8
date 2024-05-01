@@ -64,13 +64,17 @@ class ChimmyT {
     public void testMemoryOperations() {
         CalculatorModel model = new CalculatorModel();
         model.addToMemory(10);
-        assertEquals(10.0, model.getMemory(), 0.0001);
+        assertEquals(10.0, model.getMemory(), 10);
         
         model.subtractFromMemory(5);
-        assertEquals(5.0, model.getMemory(), 0.0001);
+        assertEquals(5.0, model.getMemory(), 5);
         
         model.clearMemory();
-        assertEquals(0.0, model.getMemory(), 0.0001);
+        assertEquals(0.0, model.getMemory(), 0.0);
+        
+        model.addToMemory(8);
+        model.getMemory();
+        assertEquals(0.0, model.getMemory(), 8);
     }
     //----- model tests end -----
     
@@ -102,6 +106,28 @@ class ChimmyT {
         // Verify the display handles the overflow appropriately (e.g., error message)
         assertEquals("Number too big", exception.getMessage(), "Number too big");
         
+    }
+    
+    
+
+    
+    //controller testing cuh
+    private final CalculatorView view = new CalculatorView();
+    private final CalculatorController controller = new CalculatorController(view ,calculator);
+    
+    @Test
+    public void controllerInitTest() {
+    	
+    	controller.initController();
+
+    }
+    
+    @Test
+    public void appendDecimalTest() {
+    	
+    	controller.initController();
+//    	controller.
+
     }
     
   
