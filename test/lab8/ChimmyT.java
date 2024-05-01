@@ -394,6 +394,47 @@ class ChimmyT {
         }
     }
     
+    @Test
+    void testClearMemory() {
+        // Initially add some value to memory to ensure it's not zero
+        model.addToMemory(100.0);
+
+        // Ensure memory is not zero before clearing
+        assertNotEquals(0.0, model.getMemory(), "Memory should not be zero before clearing.");
+
+        // Execute
+        controller.clearMemory();
+
+        // Verify that memory is cleared
+        assertEquals(0.0, model.getMemory(), "Memory should be zero after clearing.");
+    }
+    
+    @Test
+    void testDeleteLastCharacter() {
+        // Set up a non-empty display
+        JTextField display = view.getDisplay();
+        display.setText("12345");
+
+        // Execute
+        controller.deleteLastCharacter();
+
+        // Verify
+        assertEquals("1234", display.getText(), "Display should have last character deleted.");
+    }
+
+    @Test
+    void testDeleteLastCharacterWhenEmpty() {
+        // Set up an empty display
+        JTextField display = view.getDisplay();
+        display.setText("");
+
+        // Execute
+        controller.deleteLastCharacter();
+
+        // Verify
+        assertEquals("", display.getText(), "Display should remain empty after attempting to delete the last character.");
+    }
+    
 //    @Test
 //    public void testInvalidInput() {
 //        // Simulate button clicks or keypresses for invalid characters

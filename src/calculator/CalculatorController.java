@@ -121,12 +121,12 @@ public class CalculatorController {
     }
 
 
-    private void clearMemory() {
+    public void clearMemory() {
     	System.out.println("HERE1");
         model.clearMemory();
     }
 
-    private void deleteLastCharacter() {
+    public void deleteLastCharacter() {
         String currentDisplay = view.getDisplay().getText();
         if (!currentDisplay.isEmpty()) {
             view.updateDisplay(currentDisplay.substring(0, currentDisplay.length() - 1));
