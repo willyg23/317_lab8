@@ -58,7 +58,7 @@ public class CalculatorController {
         view.updateDisplay(view.getDisplay().getText() + number);
     }
 
-    private void performOperation(String operator) {
+    public void performOperation(String operator) {
     	try {
             if (!view.getDisplay().getText().isEmpty()) {
                 currentOperand = Double.parseDouble(view.getDisplay().getText());
@@ -72,7 +72,7 @@ public class CalculatorController {
 
     }
 
-    private void computeResult() {
+    public void computeResult() {
         try {
             double secondOperand = Double.parseDouble(view.getDisplay().getText());
             result = model.calculate(currentOperand, secondOperand, pendingOperation);

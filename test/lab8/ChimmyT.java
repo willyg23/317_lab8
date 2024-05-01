@@ -4,7 +4,7 @@ package lab8;
 import calculator.CalculatorController;
 import calculator.CalculatorModel;
 import calculator.CalculatorView;
-
+import java.lang.reflect.Field;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -198,6 +198,73 @@ class ChimmyT {
 
         // Verify
         assertEquals("1234", display.getText(), "Display should show '1234' after appending '4' to '123'.");
+    }
+    
+    @Test
+    void testPerformOperationClearsDisplay() {
+        // Set up the display with initial content
+        JTextField display = view.getDisplay();
+        display.setText("42");
+
+        // Execute
+        controller.performOperation("+");
+
+        // Verify
+        assertEquals("", display.getText(), "Display should be cleared after performing operation.");
+    }
+
+    @Test
+    void testPerformOperationSequence() throws NoSuchFieldException, IllegalAccessException {
+        // Prepare the scenario
+        JTextField display = view.getDisplay();
+        display.setText("12"); // Set first operand
+        
+        // Use reflection to directly manipulate internal state
+        Field currentOperandField = CalculatorController.class.getDeclaredField("currentOperand");
+        currentOperandField.setAccessible(true);
+        currentOperandField.set(controller, 12.0);
+
+        Field pendingOperationField = CalculatorController.class.getDeclaredField("pendingOperation");
+        pendingOperationField.setAccessible(true);
+        pendingOperationField.set(controller, "+");
+
+        display.setText("3"); // Set second operand
+
+        // Call computeResult directly for the purpose of the test
+        controller.computeResult(); // This assumes you can directly call computeResult or adjust accordingly
+
+        // Verify the result
+        assertEquals("15.0", display.getText(), "Display should show the result of 12 + 3.");
+    }
+    
+    @Test
+    void testComputeResultValidOperation() {
+        // Set up a scenario for addition
+        JTextField display = view.getDisplay();
+        display.setText("3"); // Second operand
+        controller.performOperation("+"); // Set operation and first operand
+        display.setText("2"); // Set second operand for operation
+
+        // Execute
+        controller.computeResult();
+
+        // Verify
+        assertEquals("5.0", display.getText(), "Display should show the result of 3 + 2.");
+    }
+
+    @Test
+    void testComputeResultHandlesDivideByZero() {
+        // Set up a scenario for division by zero
+        JTextField display = view.getDisplay();
+        display.setText("0"); // Second operand
+        controller.performOperation("/"); // Set operation and first operand
+        display.setText("0"); // Attempt to divide by zero
+
+        // Execute
+        controller.computeResult();
+
+        // Verify
+        assertEquals("Divide by zero error", display.getText(), "Display should show an error message for divide by zero.");
     }
     
 //    @Test
