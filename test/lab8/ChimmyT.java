@@ -267,6 +267,46 @@ class ChimmyT {
         assertEquals("Divide by zero error", display.getText(), "Display should show an error message for divide by zero.");
     }
     
+    @Test
+    void testSquareRootOperation() {
+        // Set up
+        JTextField display = view.getDisplay();
+        display.setText("9"); // Set the number for square root
+
+        // Execute
+        controller.performSingleOperandOperation("sqrt");
+
+        // Verify
+        assertEquals("3.0", display.getText(), "Display should show the square root of 9.");
+    }
+
+    @Test
+    void testSquareOperation() {
+        // Set up
+        JTextField display = view.getDisplay();
+        display.setText("5"); // Set the number to square
+
+        // Execute
+        controller.performSingleOperandOperation("sq");
+
+        // Verify
+        assertEquals("25.0", display.getText(), "Display should show 5 squared.");
+    }
+
+    @Test
+    void testUnknownOperationHandling() {
+        // Set up
+        JTextField display = view.getDisplay();
+        display.setText("10");
+
+        // Execute & Verify
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            controller.performSingleOperandOperation("xyz");
+        });
+
+        assertEquals("Unknown operation xyz", exception.getMessage(), "Should throw an exception for unknown operations.");
+    }
+    
 //    @Test
 //    public void testInvalidInput() {
 //        // Simulate button clicks or keypresses for invalid characters

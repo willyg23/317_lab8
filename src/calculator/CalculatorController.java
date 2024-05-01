@@ -86,7 +86,7 @@ public class CalculatorController {
         }
     }
 
-    private void performSingleOperandOperation(String operation) {
+    public void performSingleOperandOperation(String operation) {
         if (!view.getDisplay().getText().isEmpty()) {
             currentOperand = Double.parseDouble(view.getDisplay().getText());
             double result = switch (operation) {
