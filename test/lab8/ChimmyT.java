@@ -133,6 +133,7 @@ class ChimmyT {
 //    private final CalculatorView view = new CalculatorView();
 //    private final CalculatorController controller = new CalculatorController(view ,calculator);
     
+    
     @Test
     public void testAppendDecimalNoExistingDecimal() {
         // Setup
@@ -595,15 +596,7 @@ class ChimmyT {
     //view testing end
     
     
-//    @Test
-//    public void testInvalidInput() {
-//        // Simulate button clicks or keypresses for invalid characters
-//        enterInvalidCharacters();
-//
-//        // Verify the display does not change or shows an error
-//        String displayText = getDisplayText();
-//        assertEquals("Error", displayText, "The display should show an error message or remain unchanged after invalid input");
-//    }
+
 
     //----- Boundary testing end -----
     
