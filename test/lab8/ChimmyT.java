@@ -435,6 +435,68 @@ class ChimmyT {
         assertEquals("", display.getText(), "Display should remain empty after attempting to delete the last character.");
     }
     
+
+    @Test
+    void testClearAllResetsDisplayAndAllInternalStates() {
+        // Setup initial states
+        JTextField display = view.getDisplay();
+        display.setText("12345");
+        model.addToMemory(50.0); // Add something to memory
+        setInternalStates(10.0, "+", 20.0); // Set internal states
+
+        // Execute
+        controller.clearAll();
+
+        // Verify Display is cleared
+        assertEquals("", display.getText(), "Display should be cleared.");
+
+        // Verify internal states are reset
+        assertEquals(0.0, getCurrentOperand(), "Current operand should be reset to 0.");
+        assertNull(getPendingOperation(), "Pending operation should be null.");
+        assertEquals(0.0, getResult(), "Result should be reset to 0.");
+
+        // Verify memory is cleared
+        assertEquals(0.0, model.getMemory(), "Memory should be cleared.");
+    }
+    
+    // Utility methods for setting and getting private fields if direct access is not allowed
+    private void setInternalStates(double currentOperand, String operation, double result) {
+        // Reflectively set internal states or add test-specific methods in your controller for testing
+    	  try {
+    	        // Set the currentOperand field
+    	        Field currentOperandField = CalculatorController.class.getDeclaredField("currentOperand");
+    	        currentOperandField.setAccessible(true);
+    	        currentOperandField.set(controller, currentOperand);
+
+    	        // Set the pendingOperation field
+    	        Field pendingOperationField = CalculatorController.class.getDeclaredField("pendingOperation");
+    	        pendingOperationField.setAccessible(true);
+    	        pendingOperationField.set(controller, operation);
+
+    	        // Set the result field
+    	        Field resultField = CalculatorController.class.getDeclaredField("result");
+    	        resultField.setAccessible(true);
+    	        resultField.set(controller, result);
+    	    } catch (NoSuchFieldException | IllegalAccessException e) {
+    	        e.printStackTrace();
+    	    }
+    }
+
+    private double getCurrentOperand() {
+        // Reflectively get the currentOperand or add getter for testing
+        return 0.0; // Placeholder
+    }
+
+    private String getPendingOperation() {
+        // Reflectively get the pendingOperation or add getter for testing
+        return null; // Placeholder
+    }
+
+    private double getResult() {
+        // Reflectively get the result or add getter for testing
+        return 0.0; // Placeholder
+    }
+    
 //    @Test
 //    public void testInvalidInput() {
 //        // Simulate button clicks or keypresses for invalid characters

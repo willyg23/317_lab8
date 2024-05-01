@@ -133,7 +133,7 @@ public class CalculatorController {
         }
     }
 
-    private void clearAll() {
+    public void clearAll() {
         view.updateDisplay("");
         model.clearMemory(); //removing this line so that memory persists
         currentOperand = 0;
