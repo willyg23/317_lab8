@@ -307,6 +307,57 @@ class ChimmyT {
         assertEquals("Unknown operation xyz", exception.getMessage(), "Should throw an exception for unknown operations.");
     }
     
+
+    @Test
+    void testAddingToMemory() {
+        // Setting up the necessary state
+        setControllerResult(5.0); // Assume result is 5.0
+
+        // Execute
+        controller.updateMemory(1);
+
+        // Verify
+        assertEquals(5.0, model.getMemory(), "Memory should have 5.0 added.");
+    }
+
+    @Test
+    void testSubtractingFromMemory() {
+        // Setting up the necessary state
+        setControllerResult(5.0); // Assume result is 5.0
+        model.addToMemory(10.0); // Initial memory state
+
+        // Execute
+        controller.updateMemory(-1);
+
+        // Verify
+        assertEquals(5.0, model.getMemory(), "Memory should have 5.0 subtracted, leaving 5.0.");
+    }
+
+    @Test
+    void testErrorHandlingForZeroResult() {
+        // Set up
+        JTextField display = view.getDisplay();
+        setControllerResult(0); // Set result to 0
+
+        // Execute
+        controller.updateMemory(1);
+
+        // Verify
+        assertEquals("Error", display.getText(), "Display should show an error message when result is zero.");
+    }
+
+    // Utility method to set the private result field via reflection or a test-specific method
+    private void setControllerResult(double result) {
+        // Reflectively set the result or use a method if available in your testing framework
+        try {
+            java.lang.reflect.Field resultField = CalculatorController.class.getDeclaredField("result");
+            resultField.setAccessible(true);
+            resultField.set(controller, result);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
 //    @Test
 //    public void testInvalidInput() {
 //        // Simulate button clicks or keypresses for invalid characters

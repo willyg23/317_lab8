@@ -99,7 +99,7 @@ public class CalculatorController {
         }
     }
 
-    private void updateMemory(double multiplier) {
+    public void updateMemory(double multiplier) {
         if (result != 0) {  // Only check result, since it's the output of an operation
             if (multiplier == 1) {
                 model.addToMemory(result); // Add result to memory
