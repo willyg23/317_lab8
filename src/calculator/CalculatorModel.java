@@ -23,6 +23,10 @@ public class CalculatorModel {
         if (operand1 > Double.MAX_VALUE || operand2 > Double.MAX_VALUE || (operand1 + operand2) > Double.MAX_VALUE) {
             throw new ArithmeticException("Number too big");
         }
+        
+        if( (String.valueOf(operand1) == null) || (String.valueOf(operand2) == null) ) {
+        	throw new IllegalArgumentException("Either operand can't be null");
+        }
     	
         switch (operator) {
             case "+": return operand1 + operand2;
