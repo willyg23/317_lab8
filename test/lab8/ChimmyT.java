@@ -15,9 +15,7 @@ import org.junit.jupiter.api.BeforeEach;
 
 import org.junit.jupiter.api.Test;
 
-/**
- * The ChimmyT class contains JUnit tests for the Calculator application.
- */
+
 class ChimmyT {
 
     private final CalculatorModel calculator = new CalculatorModel();
@@ -485,19 +483,38 @@ class ChimmyT {
     	    }
     }
 
+
     private double getCurrentOperand() {
-        // Reflectively get the currentOperand or add getter for testing
-        return 0.0; // Placeholder
+        try {
+            Field field = CalculatorController.class.getDeclaredField("currentOperand");
+            field.setAccessible(true);
+            return (double) field.get(controller);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            e.printStackTrace();
+            return Double.NaN; // Not a Number to indicate error
+        }
     }
 
     private String getPendingOperation() {
-        // Reflectively get the pendingOperation or add getter for testing
-        return null; // Placeholder
+        try {
+            Field field = CalculatorController.class.getDeclaredField("pendingOperation");
+            field.setAccessible(true);
+            return (String) field.get(controller);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            e.printStackTrace();
+            return null; // Indicate error
+        }
     }
 
     private double getResult() {
-        // Reflectively get the result or add getter for testing
-        return 0.0; // Placeholder
+        try {
+            Field field = CalculatorController.class.getDeclaredField("result");
+            field.setAccessible(true);
+            return (double) field.get(controller);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            e.printStackTrace();
+            return Double.NaN; // Not a Number to indicate error
+        }
     }
     
     
