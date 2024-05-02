@@ -2,13 +2,20 @@ package calculator;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * The CalculatorView class represents the graphical user interface (GUI) of the calculator application.
+ * It extends the JFrame class to create a window for the calculator.
+ */
 public class CalculatorView extends JFrame {
 	private JTextField display = new JTextField();
     private JButton[] numberButtons = new JButton[10];
     private JButton addButton, subtractButton, multiplyButton, divideButton, equalsButton;
     private JButton decimalButton; // Declare the decimal button
     private JButton sqrtButton, squareButton, memoryAddButton, memorySubtractButton, memoryRecallButton, memoryClearButton, deleteButton, clearButton;
-
+    /**
+     * Constructor for the CalculatorView class.
+     * Sets up the layout and components of the calculator GUI.
+     */
     public CalculatorView() {
         // Setup the display
         setLayout(new BorderLayout());
@@ -73,72 +80,140 @@ public class CalculatorView extends JFrame {
         setVisible(true);
     }
 
-    
+    /**
+     * Retrieves the decimal button.
+     *
+     * @return The decimal button.
+     */
     public JButton getDecimalButton() {
         return decimalButton;
     }
-
+    /**
+     * Retrieves the equals button.
+     *
+     * @return The equals button.
+     */
     public JButton getEqualsButton() {
         return equalsButton;
     }
-
+    /**
+     * Retrieves an array containing all number buttons.
+     *
+     * @return An array of number buttons.
+     */
     public JButton[] getNumberButtons() {
         return numberButtons;
     }
-
+    /**
+     * Retrieves the addition button.
+     *
+     * @return The addition button.
+     */
     public JButton getAddButton() {
         return addButton;
     }
-
+    /**
+     * Retrieves the subtraction button.
+     *
+     * @return The subtraction button.
+     */
     public JButton getSubtractButton() {
         return subtractButton;
     }
-
+    /**
+     * Retrieves the multiplication button.
+     *
+     * @return The multiplication button.
+     */
     public JButton getMultiplyButton() {
         return multiplyButton;
     }
-
+    /**
+     * Retrieves the division button.
+     *
+     * @return The division button.
+     */
     public JButton getDivideButton() {
         return divideButton;
     }
-
+    /**
+     * Retrieves the square root button.
+     *
+     * @return The square root button.
+     */
     public JButton getSqrtButton() {
         return sqrtButton;
     }
-
+    /**
+     * Retrieves the square button.
+     *
+     * @return The square button.
+     */
     public JButton getSquareButton() {
         return squareButton;
     }
-
+    /**
+     * Retrieves the memory addition button.
+     *
+     * @return The memory addition button.
+     */
     public JButton getMemoryAddButton() {
         return memoryAddButton;
     }
-
+    /**
+     * Retrieves the memory subtraction button.
+     *
+     * @return The memory subtraction button.
+     */
     public JButton getMemorySubtractButton() {
         return memorySubtractButton;
     }
-
+    /**
+     * Retrieves the memory recall button.
+     *
+     * @return The memory recall button.
+     */
     public JButton getMemoryRecallButton() {
         return memoryRecallButton;
     }
-
+    /**
+     * Retrieves the memory clear button.
+     *
+     * @return The memory clear button.
+     */
     public JButton getMemoryClearButton() {
         return memoryClearButton;
     }
-
+    /**
+     * Retrieves the delete button.
+     *
+     * @return The delete button.
+     */
     public JButton getDeleteButton() {
         return deleteButton;
     }
-
+    /**
+     * Retrieves the clear button.
+     *
+     * @return The clear button.
+     */
     public JButton getClearButton() {
         return clearButton;
     }
-
+    /**
+     * Retrieves the display JTextField.
+     *
+     * @return The display JTextField.
+     */
     public JTextField getDisplay() {
         return display;
     }
 
-    // Update display method
+    /**
+     * Updates the display JTextField with the specified value.
+     *
+     * @param value The value to display.
+     */
     public void updateDisplay(String value) {
         display.setText(value);
     }
