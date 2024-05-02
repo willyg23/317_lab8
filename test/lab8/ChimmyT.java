@@ -15,7 +15,9 @@ import org.junit.jupiter.api.BeforeEach;
 
 import org.junit.jupiter.api.Test;
 
-
+/**
+ * The ChimmyT class contains JUnit tests for the Calculator application.
+ */
 class ChimmyT {
 
     private final CalculatorModel calculator = new CalculatorModel();
