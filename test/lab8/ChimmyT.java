@@ -26,29 +26,42 @@ class ChimmyT {
     private CalculatorView view;
     private CalculatorModel model;
 
+    /**
+     * Set up the environment for each test.
+     * This method initializes the necessary components like the view, model, and controller
+     * to ensure that each test starts with a fresh instance.
+     */
     @BeforeEach
     public void setUp() {
-        view = new CalculatorView(); // Actual view object
-        model = new CalculatorModel(); // Actual model object
-        controller = new CalculatorController(view, model);
+        view = new CalculatorView(); // Instantiate the view part of MVC
+        model = new CalculatorModel(); // Instantiate the model part of MVC
+        controller = new CalculatorController(view, model); // Instantiate the controller with dependencies
     }
-     //----- model tests start -----
     
-    
-    
-    //pass
+    //----- Model tests start -----
+
+    /**
+     * Test to ensure that addition is performed correctly.
+     * Checks if the model correctly calculates the sum of two numbers.
+     */
     @Test
     void testAddition() {
         assertEquals(8, calculator.calculate(5, 3, "+"), "Addition test failed");
     }
     
-    //pass
+    /**
+     * Test to ensure that division is performed correctly.
+     * Checks if the model correctly calculates the division of two numbers.
+     */
     @Test
     void testDivision() {
         assertEquals(5, calculator.calculate(10, 2, "/"), "Division test failed");
     }
 
-    //pass
+    /**
+     * Test to check the behavior when attempting to divide by zero.
+     * Expects an ArithmeticException to be thrown with a specific error message.
+     */
     @Test
     void testDivideByZero() {
         Exception exception = assertThrows(ArithmeticException.class, () -> {
@@ -57,7 +70,10 @@ class ChimmyT {
         assertEquals("Divide by zero error", exception.getMessage(), "Divide by zero test failed");
     }
 
-    //pass
+    /**
+     * Test to check the calculation of the square root of a negative number.
+     * Expects an ArithmeticException to ensure the model correctly handles this error scenario.
+     */
     @Test
     void testSquareRootOfNegativeNumber() {
         Exception exception = assertThrows(ArithmeticException.class, () -> {
@@ -65,17 +81,23 @@ class ChimmyT {
         });
         assertEquals("Cannot take the square root of a negative number", exception.getMessage(), "Square root of negative number test failed");
     }
-  
-  //pass
+
+    /**
+     * Test to ensure that multiplication is performed correctly.
+     * Validates that the model correctly multiplies two numbers.
+     */
     @Test
     void testMulitplaction() {
-    	assertEquals(100, calculator.calculate(10, 10, "*"));
+        assertEquals(100, calculator.calculate(10, 10, "*"), "Multiplication test failed");
     }
     
-    //pass
+    /**
+     * Test to ensure that subtraction is performed correctly.
+     * Checks if the model correctly calculates the difference between two numbers.
+     */
     @Test
     void testSubtraction() {
-    	assertEquals(24, calculator.calculate(30, 6, "-"));
+        assertEquals(24, calculator.calculate(30, 6, "-"), "Subtraction test failed");
     }
     
     @Test
@@ -94,6 +116,26 @@ class ChimmyT {
         model.getMemory();
         assertEquals(0.0, model.getMemory(), 8);
     }
+    
+    /**
+     * Test memory operations including add, subtract, and clear functionality.
+     * This test checks if the memory operations correctly update the internal state of memory.
+     */
+    @Test
+    public void testMemoryOperations2() {
+        CalculatorModel model = new CalculatorModel();
+        model.addToMemory(10); // Add 10 to memory
+        assertEquals(10.0, model.getMemory(), "Memory should be 10 after adding 10");
+
+        model.subtractFromMemory(5); // Subtract 5 from memory
+        assertEquals(5.0, model.getMemory(), "Memory should be 5 after subtracting 5");
+
+        model.clearMemory(); // Clear the memory
+        assertEquals(0.0, model.getMemory(), "Memory should be 0 after clearing");
+
+        model.addToMemory(8); // Add 8 to memory
+        assertEquals(8.0, model.getMemory(), "Memory should be 8 after adding 8");
+    }
     //----- model tests end -----
     
   
@@ -101,18 +143,17 @@ class ChimmyT {
 //    //----- Boundary testing start -----
     @Test
     public void testOverflow() {
-        // Enter a very large number
-        
-        
-        
+
         Exception exception = assertThrows(ArithmeticException.class, () -> {
-        	calculator.addToMemory(Double.MAX_VALUE);
+        	calculator.addToMemory(Double.MAX_VALUE + 1);
         });
         
         // Verify the display handles the overflow appropriately (e.g., error message)
         assertEquals("Number too big", exception.getMessage(), "Number too big");
     }
-
+    
+    
+//no pasa
     @Test
     public void testOverflow2() {
     	
@@ -125,14 +166,24 @@ class ChimmyT {
         assertEquals("Number too big", exception.getMessage(), "Number too big");
         
     }
-    
-    
 
-    
-    //controller testing cuh
-//    private final CalculatorView view = new CalculatorView();
-//    private final CalculatorController controller = new CalculatorController(view ,calculator);
-    
+    /**
+     * Test to verify the model's response to overflow scenarios, specifically when adding a large number to memory.
+     * This test ensures that the model throws an appropriate exception when overflow conditions are met.
+     */
+    @Test
+    public void testOverflow3() {
+        CalculatorModel calculator = new CalculatorModel();
+
+        // Simulate an overflow by adding the maximum double value
+        Exception exception = assertThrows(ArithmeticException.class, () -> {
+            calculator.addToMemory(Double.MAX_VALUE);
+            calculator.addToMemory(1); // This operation should cause an overflow
+        });
+
+        // Verify that the appropriate exception is thrown indicating an overflow
+        assertEquals("Number too big", exception.getMessage(), "Expected exception for number too big was not thrown");
+    }
     
     @Test
     public void testAppendDecimalNoExistingDecimal() {

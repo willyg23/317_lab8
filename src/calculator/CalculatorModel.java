@@ -20,7 +20,7 @@ public class CalculatorModel {
      */
     public double calculate(double operand1, double operand2, String operator) {
     	
-        if (operand1 >= Double.MAX_VALUE || operand2 >= Double.MAX_VALUE) {
+        if (operand1 > Double.MAX_VALUE || operand2 > Double.MAX_VALUE) {
             throw new ArithmeticException("Number too big");
         }
     	
